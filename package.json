@@ -37,6 +37,7 @@
     "lint:all": "eslint --ext .js,.jsx,.ts,.tsx,.sass --fix .",
     "pretty": "prettier --write --loglevel silent",
     "pretty:all": "prettier --write --loglevel silent '**/*.{json,yml,yaml,js,jsx,ts,tsx,.sass}'",
+    "predeploy": "yarn build",
     "deploy": "gh-pages -d build -b deploy"
   },
   "browserslist": {

@@ -161,4 +161,4 @@ workflows:
           filters:
             branches:
               only:
-                - config-deploy
+                - develop

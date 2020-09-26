@@ -1,0 +1,164 @@
+version: 2.1
+
+commands:
+  prepare:
+    description: Prepare environment
+    steps:
+      - run:
+          name: Config git info
+          command: |
+            git config --global user.email 'moonlight8978@gmail.com'
+            git config --global user.name 'CircleCI'
+
+      - checkout
+
+      - restore_cache:
+          keys:
+            - node-modules-v1-{{ checksum "yarn.lock" }}
+            - node-modules-v1-
+
+      - run:
+          name: Install npm packages
+          command: yarn install
+
+      - save_cache:
+          paths:
+            - ./node_modules
+          key: node-modules-v1-{{ checksum "yarn.lock" }}
+
+executors:
+  react_app:
+    docker:
+      - image: circleci/node:erbium
+    working_directory: ~/app
+
+jobs:
+  check:
+    executor: react_app
+    steps:
+      - prepare
+
+      - run:
+          name: NodeJS version
+          command: node -v
+
+      - run:
+          name: Yarn version
+          command: yarn -v
+
+  lint:
+    executor: react_app
+    steps:
+      - prepare
+
+      - run:
+          name: Linting and types checking
+          command: |
+            yarn lint:check
+
+  test:
+    executor: react_app
+    steps:
+      - prepare
+
+      - run:
+          name: Run unit tests with coverage
+          command: yarn test
+
+      # - run:
+      #     name: Run e2e tests
+      #     command: yarn test:e2e
+
+      # - persist_to_workspace:
+      #     root: .
+      #     paths:
+      #       - coverage/*
+
+  # collect_coverage:
+  #   executor: react_app
+  #   steps:
+  #     - prepare
+
+  #     - attach_workspace:
+  #         at: .
+
+  #     - run:
+  #         name: Push coverage to codecov
+  #         command: yarn codecov
+
+  # calculate_loc:
+  #   executor: react_app
+  #   steps:
+  #     - prepare
+
+  #     - run:
+  #         name: Calculate Line of codes
+  #         command: |
+  #           yarn loc
+  #     - run:
+  #         name: Debug
+  #         command: |
+  #           echo "Processed files"
+  #           cat tmp/clocfiles
+  #           echo -e "\n\n"
+  #           echo "Ignored files"
+  #           if [ -f tmp/clocignore ]; then cat tmp/clocignore; fi
+
+  release:
+    executor: react_app
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - 3f:a5:67:c4:00:8a:ae:74:0a:61:8d:2c:8c:70:54:3d
+
+      - prepare
+
+      - deploy:
+          name: Build and deploy to github.io
+          command: yarn deploy
+
+      - run:
+          name: Create release tag
+          command: |
+            TIMESTAMP=$(date '+%Y%m%d%H%M%S')
+            VERSION=$(cat package.json |
+              grep version |
+              head -1 |
+              awk -F: '{ print $2 }' |
+              sed 's/[", ]//g')
+            BRANCH=$(git rev-parse --abbrev-ref HEAD)
+            COMMIT_ID=$(git rev-parse HEAD)
+            ./.circleci/create-release-tag.sh $TIMESTAMP $VERSION $BRANCH $COMMIT_ID
+
+aliases:
+  ignore_deploy_branch: &ignore_deploy_branch
+    filters:
+      branches:
+        ignore:
+          - deploy
+
+workflows:
+  workflow:
+    jobs:
+      - lint:
+          <<: *ignore_deploy_branch
+      - check:
+          <<: *ignore_deploy_branch
+      - test:
+          <<: *ignore_deploy_branch
+          requires:
+            - check
+            - lint
+      # - collect_coverage: &post_test
+      #     <<: *ignore_deploy_branch
+      #     requires:
+      #       - test
+      # - calculate_loc:
+      #     <<: *post_test
+      - release:
+          requires:
+            - test
+          filters:
+            branches:
+              only:
+                - develop

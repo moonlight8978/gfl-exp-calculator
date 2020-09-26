@@ -15,7 +15,7 @@ curl_command="curl --silent --output release.json --write-out '%{http_code}' \
   }' \
   --header \"Authorization: token $GITHUB_ACCESS_TOKEN\" \
   --header \"Content-Type: application/json\" \
-  https://api.github.com/repos/moonlight8978/gfl-exp-calculator/releases"
+  https://api.github.com/repos/moonlight8978/gfl-calculator/releases"
 http_code=$(eval $curl_command)
 
 if [ $http_code = 201 ]; then

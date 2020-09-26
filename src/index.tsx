@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom'
 // import 'shards-ui/dist/css/shards.min.css'
 /* eslint-enable import/no-extraneous-dependencies */
 
-import App from 'src/App'
+import App from 'src/app'
 
 import './index.css'
 import * as serviceWorker from './serviceWorker'

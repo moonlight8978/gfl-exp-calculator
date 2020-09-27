@@ -2,4 +2,4 @@
 .vs/gfl-exp-calculator/v15/.suo
 *.sqlite-journal
 *.sqlite
-*.json
+node_modules/

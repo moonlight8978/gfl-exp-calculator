@@ -1,4 +1,11 @@
 {
+  "homepage": "https://moonlight8978.github.io/gfl-calculator/",
+  "name": "gfl-calculator",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:moonlight8978/gfl-calculator.git",
+  "author": "_MoonLight_ <moonlight8978@gmail.com>",
+  "license": "MIT",
   "devDependencies": {
     "gh-pages": "^3.1.0"
   },

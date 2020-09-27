@@ -60,8 +60,8 @@ var mvpBonus = 0.3;
 var leaderAndMvpBonus = 0.06;
 
 //EXP by level
-var levelEXP = [100,200,300,400,500,600,700,800,900,1000,1100,1200,1300,1400,1500,1600,1700,1800,1900,2000,2100,2200,2300,2400,2500,2600,2800,3100,3400,4200,4600,5000,5400,5800,6300,6700,7200,7700,8200,8800,9300,9900,10500,11100,11800,12500,13100,13900,14600,15400,16100,16900,17700,18600,19500,20400,21300,22300,23300,24300,25300,26300,27400,28500,29600,30800,32000,33200,34400,45100,46800,48600,50400,52200,54000,55900,57900,59800,61800,63900,66000,68100,70300,72600,74800,77100,79500,81900,84300,112600,116100,119500,123100,126700,130400,134100,137900,141800,145700];
-var totalLevelEXP = [0,100,300,600,1000,1500,2100,2800,3600,4500,5500,6600,7800,9100,10500,12000,13600,15300,17100,19000,21000,23100,25300,27600,30000,32500,35100,37900,41000,44400,48600,53200,58200,63600,69400,75700,82400,89600,97300,105500,114300,123600,133500,144000,155100,166900,179400,192500,206400,221000,236400,252500,269400,287100,305700,325200,345600,366900,389200,412500,436800,462100,488400,515800,544300,573900,604700,636700,669900,704300,749400,796200,844800,895200,947400,1001400,1057300,1115200,1175000,1236800,1300700,1366700,1434800,1505100,1577700,1652500,1729600,1809100,1891000,1975300,2087900,2204000,2323500,2446600,2573300,2703700,2837800,2975700,3117500,3263200];
+var levelEXP = [100,200,300,400,500,600,700,800,900,1000,1100,1200,1300,1400,1500,1600,1700,1800,1900,2000,2100,2200,2300,2400,2500,2600,2800,3100,3400,4200,4600,5000,5400,5800,6300,6700,7200,7700,8200,8800,9300,9900,10500,11100,11800,12500,13100,13900,14600,15400,16100,16900,17700,18600,19500,20400,21300,22300,23300,24300,25300,26300,27400,28500,29600,30800,32000,33200,34400,45100,46800,48600,50400,52200,54000,55900,57900,59800,61800,63900,66000,68100,70300,72600,74800,77100,79500,81900,84300,112600,116100,119500,123100,126700,130400,134100,137900,141800,145700,100000,120000,140000,160000,180000,200000,220000,240000,280000,360000,480000,640000,900000,1200000,1600000,2200000,3000000,4000000,5000000,6000000];
+var totalLevelEXP = [0,100,300,600,1000,1500,2100,2800,3600,4500,5500,6600,7800,9100,10500,12000,13600,15300,17100,19000,21000,23100,25300,27600,30000,32500,35100,37900,41000,44400,48600,53200,58200,63600,69400,75700,82400,89600,97300,105500,114300,123600,133500,144000,155100,166900,179400,192500,206400,221000,236400,252500,269400,287100,305700,325200,345600,366900,389200,412500,436800,462100,488400,515800,544300,573900,604700,636700,669900,704300,749400,796200,844800,895200,947400,1001400,1057300,1115200,1175000,1236800,1300700,1366700,1434800,1505100,1577700,1652500,1729600,1809100,1891000,1975300,2087900,2204000,2323500,2446600,2573300,2703700,2837800,2975700,3117500,3263200,3363200,3483200,3623200,3783200,3963200,4163200,4383200,4623200,4903200,5263200,5743200,6383200,7283200,8483200,10083200,12283200,15283200,19283200,24283200,30283200];
 
 // [0] Stage Name [1] Penalty Level [2] Base EXP [3] Amount of Enemies [4] Turns to Finish [5] Is Combat Sim [6] Energy Consumption
 var stageEXP = [
@@ -72,7 +72,14 @@ var stageEXP = [
 	["4-3E", 74, 370, 4, 0],
 	["5-4", 79, 380, 5, 0],
 	["5-2E", 87, 410, 5, 0],
-	["0-2", 100, 490, 5, 1],
+	["0-2", 110, 490, 5, 2],
+	["0-4", 116, 500, 5, 1],
+	["6-3N", 114, 490, 2, 1],
+	["8-1N", 999, 500, 5, 1],
+	["10-4E", 999, 500, 5, 2],
+	["11-5", 999, 550, 5, 1],
+	["12-4E", 999, 600, 5, 1],
+	["13-4", 999, 600, 5, 1],
 	["Basic Training Simulation", 100, 20000, 1, 1, true, 1],
 	["Intermediate Training Simulation", 100, 80000, 1, 1, true, 2],
 	["Advanced Training Simulation", 100, 240000, 1, 1, true, 3]
@@ -152,7 +159,7 @@ var graphData = {
 					label += "Level " + tooltipItem.yLabel;
 					return label;
 				}
-			}        
+			}
 		},
 
 		hover: {
@@ -162,7 +169,7 @@ var graphData = {
 
 		scales: {
 			xAxes: [{
-				display: true			
+				display: true
 			}],
 			yAxes: [{
 				display: true,
@@ -184,12 +191,12 @@ function generateCalculator()
 		document.getElementById("header").innerHTML += "V" + version;
 		var mainTable = document.getElementById("mainTable").innerHTML;
 
-		for(i = 1; i < amountOfDolls; i++) 
+		for(i = 1; i < amountOfDolls; i++)
 			document.getElementById("mainTable").innerHTML += mainTable;
 
 		var ctx = document.getElementById("resultsGraph");
 		resultsGraph = new Chart(ctx, graphData);
-			
+
 		var dollType = document.getElementsByName("dollType");
 		dollType[0].value = "carry1";
 		dollType[1].value = "carry2";
@@ -201,7 +208,7 @@ function generateCalculator()
 
 		if(document.getElementById("corpseDrag").checked)
 			isSupplied[0].disabled = true;
-	
+
 		isSupplied[1].disabled = true;
 		isSupplied[1].checked = true;
 
@@ -209,7 +216,7 @@ function generateCalculator()
 		var suppliedCB = document.getElementsByClassName("suppliedCB");
 
 		for(i = 0; i < amountOfDolls; i++)
-		{ 
+		{
 			if(i > 1)
 				suppliedCB[i].innerHTML = '<input class="checkbox" type="checkbox" name="isSupplied">';
 
@@ -217,7 +224,7 @@ function generateCalculator()
 			isSupplied[i].id = "isSupplied" + i;
 
 			leaderCB[i].innerHTML += '<label for="' + isLeader[i].id + '"> <div class="tooltip"> Is Leader <span class="tooltiptext"> Minimum of one leader is required. Corpse dragging can have two interchanging leaders. Leaders also get 20% bonus EXP. </span> </div> </label>';
-			suppliedCB[i].innerHTML += '<label for="' + isSupplied[i].id + '"> <div class="tooltip"> Is Supplied <span class="tooltiptext"> Supplied dolls will consume Ammo and Rations. </span> </div> </label>'; 
+			suppliedCB[i].innerHTML += '<label for="' + isSupplied[i].id + '"> <div class="tooltip"> Is Supplied <span class="tooltiptext"> Supplied dolls will consume Ammo and Rations. </span> </div> </label>';
 		}
 
 		mainTableGenerated = true;
@@ -226,7 +233,7 @@ function generateCalculator()
 	resetConsole();
 	showChangeLog();
 	preloadImages([idleGif, movingGif]);
-	
+
 	document.getElementById("consoleDiv").style.display = "none";
 	document.getElementById("graphDiv").style.display = "none";
 	document.getElementsByClassName("calculator")[0].classList.add("show");
@@ -241,10 +248,10 @@ function generateCalculator()
 		{
 			var stageName = stageEXP[i][0];
 
-			if(!stageEXP[i][5]) 
+			if(!stageEXP[i][5])
 				stageName += " (" + stageEXP[i][2] + " EXP, " + stageEXP[i][3] + " Enemies)";
-			else 
-				stageName += " (" + stageEXP[i][2] + " EXP)";	
+			else
+				stageName += " (" + stageEXP[i][2] + " EXP)";
 
 			stageHTML += '<option value="' + stageEXP[i][0] + '">' + stageName + "</option>";
 		}
@@ -252,19 +259,19 @@ function generateCalculator()
 		stage.innerHTML = stageHTML;
 		stagesLoaded = true;
 	}
-	
-	if(!comabtFairyLoaded) 
+
+	if(!comabtFairyLoaded)
 	{
 		var combatFairy = document.getElementById("combatFairy");
 		var fairyHTML = "";
 
-		for(i = 0; i < combatFairyBoost.length; i++) 
+		for(i = 0; i < combatFairyBoost.length; i++)
 		{
 			var level = "Level " + i + " (+" + Math.round(combatFairyBoost[i] * 100) + "%)";
 
 			if(i == 0)
 				level = "Don't Use";
-			
+
 			fairyHTML += '<option value="' + combatFairyBoost[i] + '">' + level + "</option>";
 		}
 
@@ -294,14 +301,14 @@ function updateGraph()
 
 			if(graphMode == "linear")
 				stageNum = Math.ceil(stageClears * (i / graphLabels));
-			
+
 			if(graphMode == "exponential")
 			{
 				stageNum = Math.ceil(stageClears / Math.pow(graphExponentBase, graphLabels - i));
 
 				if(i > 1 && stageNum == 1)
 					continue;
-			}				
+			}
 
 			labels.push("Stage " + stageNum);
 			labelNums.push(stageNum);
@@ -411,7 +418,7 @@ function resetCalculator()
 
 	if(document.getElementById("corpseDrag").checked)
 		isSupplied[0].disabled = true;
-	
+
 	isSupplied[1].disabled = true;
 	isSupplied[1].checked = true;
 
@@ -456,7 +463,7 @@ function toggleAll(toggle)
 		toggledElements = [];
 		var elements = document.body.getElementsByTagName("*");
 
-		for(i = 0; i < elements.length; i++)	
+		for(i = 0; i < elements.length; i++)
 		{
 			if(!elements[i].disabled && elements[i].id != "stop" && elements[i].className != "buttonSwitch" && elements[i].parentElement.id != "graphSettings" && elements[i].parentElement.id != "graphMode")
 			{
@@ -466,8 +473,8 @@ function toggleAll(toggle)
 		}
 	} else
 	{
-		for(i = 0; i < toggledElements.length; i++)		
-			toggledElements[i].disabled = false;		
+		for(i = 0; i < toggledElements.length; i++)
+			toggledElements[i].disabled = false;
 	}
 }
 
@@ -476,7 +483,7 @@ function validateValues()
 	var elements = document.body.getElementsByTagName("*");
 
 	for(i = 0; i < elements.length; i++)
-	{ 
+	{
 		if(elements[i].type != "number" || elements[i].disabled)
 			continue;
 
@@ -509,7 +516,7 @@ function calculatorOnInput()
 	if(calcType == "targetLevel")
 	{
 		targetText.innerHTML = "Target Level: ";
-		target.max = 100;
+		target.max = 120;
 	} else if(calcType == "executeRuns")
 	{
 		targetText.innerHTML = "Amount of Runs: ";
@@ -535,7 +542,7 @@ function calculatorOnInput()
 	var rations = document.getElementById("rations");
 	var batteries = document.getElementById("batteries");
 	var energy = document.getElementById("energy");
-	
+
 	var targetResource;
 
 	if(calcType == "useResources")
@@ -576,7 +583,7 @@ function calculatorOnInput()
 		gunType2.value = "none";
 		clevel2.value = 0;
 		cexp2.value = 0;
-		links2.value = "auto";		
+		links2.value = "auto";
 	} else
 	{
 		isSupplied.checked = true;
@@ -673,7 +680,7 @@ function isLeaderClick(x)
 		currentLeaders.push(x.id);
 	else
 		currentLeaders.splice(currentLeaders.indexOf(x.id), 1);
-		
+
 	if(currentLeaders.length > 2)
 	{
 		var toRemove = currentLeaders.shift();
@@ -688,7 +695,7 @@ function resourcesClick(x)
 		var manpower = document.getElementById("manpower");
 		var ammo = document.getElementById("ammo");
 		var rations = document.getElementById("rations");
-	
+
 		switch(x.id)
 		{
 			case manpower.id:
@@ -779,15 +786,15 @@ function calculateBtn()
 	var stage = document.getElementById("stage").value;
 
 	for(i = 0; i < stageEXP.length; i++)
-	{ 
+	{
 		if(stage == stageEXP[i][0])
 		{
-			stageIndex = i; 
+			stageIndex = i;
 			break;
 		}
 	}
 
-	isCombatSim = stageEXP[stageIndex][5]; 
+	isCombatSim = stageEXP[stageIndex][5];
 
 	var corpseDrag = document.getElementById("corpseDrag").checked;
 	var calcType = document.getElementById("calcType").value;
@@ -822,7 +829,7 @@ function calculateBtn()
 		var isLeader = document.getElementsByName("isLeader")[i].checked;
 		var isSupplied = document.getElementsByName("isSupplied")[i].checked;
 		var links = document.getElementsByName("links")[i].value;
-		
+
 		if(dollMinLevel == 0 || dollMinLevel > clevel)
 			dollMinLevel = clevel;
 
@@ -835,7 +842,7 @@ function calculateBtn()
 			currentDollLeader = dolls.length;
 
 			if(dollType == "carry1")
-				carry1Leader = true;		
+				carry1Leader = true;
 
 			if(dollType == "carry2")
 				carry2Leader = true;
@@ -843,7 +850,7 @@ function calculateBtn()
 
 		if(isSupplied)
 			suppliedDolls++;
-		
+
 		var doll = new TDoll(gunType, dollType, clevel, cexp, isLeader, isSupplied, links, dolls.length);
 		dolls.push(doll);
 	}
@@ -860,7 +867,7 @@ function calculateBtn()
 	if(!isCombatSim)
 	{
 		if(dollLeaders.length < 1)
-		{	
+		{
 			LogAlert("[!] One leader must be assigned.");
 			return;
 		}
@@ -890,7 +897,7 @@ function calculateBtn()
 	Log("Inputs Valid. Beginning Calculation.");
 	Log("Calculation Type: " + calcType + " | Stage Selected: " + stageEXP[stageIndex][0] + " | Dolls Active: " + dolls.length);
 	Log("EXP Boost: " + document.getElementById("expBoost").checked + " | Utilize Surplus EXP: " + document.getElementById("useSurplusEXP").checked + " | Corpse Drag Mode: " + corpseDrag);
-	
+
 	calculationLoop();
 }
 
@@ -932,12 +939,12 @@ function calculationLoop()
 			calculations++;
 		}
 
-		totalBattles++;	
+		totalBattles++;
 		setResultValues();
 
 		if(isCombatSim)
 			energyConsumed += stageEXP[stageIndex][6];
-			
+
 		if(stagesCleared < stageClears)
 		{
 			if(corpseDrag)
@@ -970,7 +977,7 @@ function calculationLoop()
 			}
 			stagesCleared++;
 		}
-			
+
 		if(calcType == "targetLevel" && dollsLeveled == dolls.length)
 		{
 			loopFinish();
@@ -979,7 +986,7 @@ function calculationLoop()
 
 		if(calcType == "executeRuns" && stageClears == target)
 		{
-			loopFinish(); 
+			loopFinish();
 			return;
 		}
 
@@ -1011,9 +1018,9 @@ function calculationLoop()
 			}
 		}
 	}
-	
+
 	var ms = new Date().getTime() - time;
-	setTimeout(calculationLoop, ms * loopDelay);				
+	setTimeout(calculationLoop, ms * loopDelay);
 }
 
 function stopCalculation()
@@ -1044,7 +1051,7 @@ function loopFinish()
 		var resultText = "";
 		var expPercentage = Math.round((dolls[i].nexp / levelEXP[dolls[i].nlevel - 1]) * 100);
 
-		if(dolls[i].nlevel == 100)
+		if(dolls[i].nlevel == 120)
 			expPercentage = 100;
 
 		resultText += "Doll " + (i + 1) + " (" + gunType + ")";
@@ -1070,7 +1077,7 @@ function loopFinish()
 }
 
 function setResultValues()
-{	
+{
 	document.getElementById("EXPacquired").value = acquiredEXP;
 	document.getElementById("surplusEXP").value = acquiredSurplus;
 
@@ -1189,13 +1196,13 @@ function TDoll(gunType, dollType, clevel, cexp, isLeader, isSupplied, links, ind
 			var stage = stageEXP[stageIndex];
 			var penaltyLevel = stage[1];
 			var baseEXP = stage[2];
-		
+
 			// Calculate Penalty EXP
 			var penaltyEXP = 0;
 			var penaltyMultiplier = 0;
 
-			if(this.nlevel > penaltyLevel)	
-				penaltyMultiplier = Math.ceil((this.nlevel - penaltyLevel) / 10) * expPenalty;	
+			if(this.nlevel > penaltyLevel)
+				penaltyMultiplier = Math.ceil((this.nlevel - penaltyLevel) / 10) * expPenalty;
 
 			if(penaltyMultiplier >= 1)
 				penaltyEXP = minimumBaseEXP;
@@ -1207,7 +1214,7 @@ function TDoll(gunType, dollType, clevel, cexp, isLeader, isSupplied, links, ind
 			//EXP Boost
 			if(document.getElementById("expBoost").checked)
 				totalEXP *= expBoost;
-		
+
 			// Leader and MVP Bonuses
 			// Note: MVP is always the Carry Doll
 			var expMultiplier = 1;
@@ -1230,7 +1237,7 @@ function TDoll(gunType, dollType, clevel, cexp, isLeader, isSupplied, links, ind
 			totalEXP *= expMultiplier;
 			totalEXP *= linkMultiplier[this.getLinks() - 1];
 			totalEXP = Math.round(totalEXP);
-		} else		
+		} else
 			totalEXP = Math.round((stageEXP[stageIndex][2] * combatSimMultiplier) / dolls.length);
 
 		this.expAcquired += totalEXP;
@@ -1252,16 +1259,16 @@ function TDoll(gunType, dollType, clevel, cexp, isLeader, isSupplied, links, ind
 		var calcType = document.getElementById("calcType").value;
 		var useSurplusEXP = document.getElementById("useSurplusEXP").checked;
 
-		// Add Up 
-		if(this.nlevel < 100)
+		// Add Up
+		if(this.nlevel < 120)
 		{
-			this.nexp += totalEXP;			
+			this.nexp += totalEXP;
 
 			var dcLevel = parseInt(document.getElementById("dcLevel").value);
 			var rsurplusEXP = Math.ceil(totalEXP * regSurplusEXP[dcLevel]);
 			this.surplusEXP += rsurplusEXP;
 			acquiredSurplus += rsurplusEXP;
-			
+
 			if(useSurplusEXP)
 			{
 				excessSurplusEXP += rsurplusEXP;
@@ -1278,7 +1285,7 @@ function TDoll(gunType, dollType, clevel, cexp, isLeader, isSupplied, links, ind
 					{
 						this.nexp += crEXP;
 						this.crConsumed += surplusCR;
-					
+
 						excessSurplusEXP -= crEXP;
 						nextToConsumeIndex++;
 					}
@@ -1305,17 +1312,17 @@ function TDoll(gunType, dollType, clevel, cexp, isLeader, isSupplied, links, ind
 
 			return;
 		}
-		
+
 		var osLevel = parseInt(document.getElementById("osLevel").value);
 		var msurplusEXP = Math.ceil(totalEXP * maxSurplusEXP[osLevel]);
 		this.surplusEXP += msurplusEXP;
 		acquiredSurplus += msurplusEXP;
-		
+
 		if(useSurplusEXP)
 			excessSurplusEXP += msurplusEXP;
-			
+
 		if(nextToConsumeIndex == this.index)
-			nextToConsumeIndex++; 
+			nextToConsumeIndex++;
 	}
 
 	this.consumeResources = function()
@@ -1363,7 +1370,7 @@ function TDoll(gunType, dollType, clevel, cexp, isLeader, isSupplied, links, ind
 		var rationsPerStage = stageEnemies + stageTurns;
 		var rationRate = rationsPerStage / stageEnemies;
 
-		rations *= rationConsumption * rationRate;		
+		rations *= rationConsumption * rationRate;
 
 		this.ammoConsumed += ammo;
 		ammoConsumed += ammo;
@@ -1472,7 +1479,7 @@ function randomizeText()
 	{
 		random = Math.floor(Math.random() * idleMessage.length);
 
-		while (random == lastRandom) 
+		while (random == lastRandom)
 			random = Math.floor(Math.random() * idleMessage.length);
 
 		text = idleMessage[random];
@@ -1480,14 +1487,14 @@ function randomizeText()
 	{
 		random = Math.floor(Math.random() * movingMessage.length);
 
-		while (random == lastRandom) 
+		while (random == lastRandom)
 			random = Math.floor(Math.random() * movingMessage.length);
 
 		text = movingMessage[random];
 	}
 
 	lastRandom = random;
-	randomText.innerHTML = text; 
+	randomText.innerHTML = text;
 }
 
 function preloadImages(imageArray)

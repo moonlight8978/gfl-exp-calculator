@@ -6,10 +6,7 @@
   "repository": "git@github.com:moonlight8978/gfl-calculator.git",
   "author": "_MoonLight_ <moonlight8978@gmail.com>",
   "license": "MIT",
-  "devDependencies": {
-    "gh-pages": "^3.1.0"
-  },
   "scripts": {
-    "deploy": "gh-pages -d build -b v1"
+    "deploy": "npx gh-pages --dist . --branch v1"
   }
 }
